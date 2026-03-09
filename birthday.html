@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BB Birthday Game</title>
+
+<style>
+body{
+font-family: Arial;
+background: #ffe6f0;
+text-align:center;
+padding:30px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:15px;
+max-width:400px;
+margin:auto;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+button{
+padding:12px 18px;
+margin:8px;
+border:none;
+border-radius:10px;
+background:#ff4d88;
+color:white;
+font-size:16px;
+}
+
+button:hover{
+background:#ff1a66;
+}
+
+h1{
+color:#ff1a66;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="game">
+
+<h1>BB's Birthday Game 🎂</h1>
+<p>Answer the questions to unlock your birthday gifts 🎁</p>
+
+<div id="question"></div>
+
+</div>
+
+<script>
+
+let q = 0;
+
+const questions = [
+
+{
+q:"What is my nickname for you?",
+options:["Baby","BB","Babe","Madam"],
+correct:1,
+gift:"🎁 Gift 1 Unlocked: Chocolate"
+},
+
+{
+q:"When you're sad, what comfort food do you crave most?",
+options:["Chocolate","Momos","Pizza","Ice Cream"],
+correct:0,
+gift:"🎁 Gift 2 Unlocked: Flowers"
+},
+
+{
+q:"Where did we first properly meet?",
+options:["Cafe","Party","College","Instagram"],
+correct:3,
+gift:"🎁 Gift 3 Unlocked: Birthday Date"
+},
+
+{
+q:"What day is the birthday of the cutest person I know?",
+options:["10 March","9 March","11 March","Everyday"],
+correct:0,
+gift:"🎁 Gift 4 Unlocked: Surprise Gift"
+}
+
+];
+
+function showQuestion(){
+
+if(q >= questions.length){
+
+document.getElementById("game").innerHTML =
+"<h1>Happy Birthday BB 🎂</h1><p>You unlocked all your gifts ❤️</p><p>I hope this made you smile.</p>";
+
+return;
+}
+
+let current = questions[q];
+
+let html = "<h3>"+current.q+"</h3>";
+
+current.options.forEach((opt,i)=>{
+html += `<button onclick="answer(${i})">${opt}</button><br>`;
+});
+
+document.getElementById("question").innerHTML = html;
+
+}
+
+function answer(i){
+
+let current = questions[q];
+
+if(i === current.correct){
+alert(current.gift);
+}else{
+alert("Hmm not quite 😛 but gift still unlocked");
+}
+
+q++;
+showQuestion();
+
+}
+
+showQuestion();
+
+</script>
+
+</body>
+</html>
