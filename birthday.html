@@ -1,132 +1,334 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BB Birthday Game</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy Birthday Michelle 🎂💖</title>
 
 <style>
-body{
-font-family: Arial;
-background: #ffe6f0;
-text-align:center;
-padding:30px;
-}
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        color: #333;
+        overflow-x: hidden;
+    }
 
-.card{
-background:white;
-padding:25px;
-border-radius:15px;
-max-width:400px;
-margin:auto;
-box-shadow:0 5px 20px rgba(0,0,0,0.1);
-}
+    .container {
+        max-width: 500px;
+        margin: auto;
+        padding: 20px;
+        text-align: center;
+    }
 
-button{
-padding:12px 18px;
-margin:8px;
-border:none;
-border-radius:10px;
-background:#ff4d88;
-color:white;
-font-size:16px;
-}
+    /* INTRO PAGE */
+    #intro {
+        animation: fadeIn 1.2s ease;
+        margin-top: 40px;
+    }
 
-button:hover{
-background:#ff1a66;
-}
+    .emoji-plane {
+        font-size: 60px;
+        display: inline-block;
+        animation: flyAcross 4s linear infinite;
+    }
 
-h1{
-color:#ff1a66;
-}
+    @keyframes flyAcross {
+        0% { transform: translateX(-200px); }
+        100% { transform: translateX(600px); }
+    }
+
+    .emoji-cloud {
+        font-size: 45px;
+        position: absolute;
+        opacity: 0.8;
+        animation: float 12s infinite linear;
+    }
+
+    @keyframes float {
+        0% { transform: translateX(-200px); }
+        100% { transform: translateX(130vw); }
+    }
+
+    .cake {
+        font-size: 70px;
+        animation: pop 1.4s ease;
+        margin-top: 20px;
+    }
+
+    h1 {
+        font-size: 32px;
+        color: #fff;
+        text-shadow: 0 0 10px rgba(255,255,255,0.7);
+        animation: pop 1.4s ease;
+    }
+
+    @keyframes pop {
+        0% { transform: scale(0.5); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    .question-box {
+        background: #fff;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CUTE GLOW BUTTONS */
+    button {
+        background: #ff82ac;
+        color: #fff;
+        border: none;
+        padding: 14px 20px;
+        border-radius: 25px;
+        margin-top: 15px;
+        font-size: 17px;
+        cursor: pointer;
+        transition: 0.25s ease;
+        box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
+    }
+
+    button:hover {
+        background: #ff5f98;
+        transform: scale(1.07);
+        box-shadow: 0 0 18px rgba(255, 120, 200, 0.8);
+    }
+
+    button:active {
+        transform: scale(0.97);
+    }
+
+    button:hover::after {
+        content: " ✨";
+    }
+
+    .gift {
+        font-size: 22px;
+        margin-top: 20px;
+        animation: pop 0.8s ease;
+    }
+
+    .final-message {
+        font-size: 22px;
+        color: #fff;
+        margin-top: 40px;
+        line-height: 1.7;
+        text-shadow: 0 0 10px rgba(255,255,255,0.8);
+        animation: fadeIn 1.4s ease;
+        white-space: pre-line;
+    }
+
+    /* plane transition */
+    .transition-plane {
+        position: fixed;
+        top: 40%;
+        font-size: 55px;
+        animation: flyTransition 1.6s ease forwards;
+        z-index: 9999;
+    }
+
+    @keyframes flyTransition {
+        0% { left: -100px; }
+        100% { left: 120%; }
+    }
+
+    .gift-list {
+        font-size: 20px;
+        margin-top: 20px;
+        color: #fff;
+        line-height: 1.8;
+        animation: fadeIn 1.2s;
+    }
 </style>
 </head>
 
 <body>
 
-<div class="card" id="game">
+<!-- Emoji Clouds -->
+<div class="emoji-cloud" style="top:60px; animation-duration:16s;">☁️</div>
+<div class="emoji-cloud" style="top:160px; animation-duration:20s;">☁️</div>
+<div class="emoji-cloud" style="top:260px; animation-duration:24s;">☁️</div>
 
-<h1>BB's Birthday Game 🎂</h1>
-<p>Answer the questions to unlock your birthday gifts 🎁</p>
+<div class="container">
 
-<div id="question"></div>
+    <!-- INTRO PAGE -->
+    <div id="intro">
+        <div class="emoji-plane">✈️</div>
+
+        <h1>Happy Birthday Michelle ✨🎂</h1>
+
+        <div class="cake">🎂</div>
+
+        <p style="font-size:18px; color:#fff; margin-top:10px;">
+            A cute little birthday quiz<br>
+            designed specially for you 💖<br><br>
+            For every right answer…<br>
+            you unlock a birthday gift 🎁
+        </p>
+
+        <button onclick="startQuiz()">Start Quiz ➜</button>
+    </div>
+
+    <div id="game" style="display:none;"></div>
 
 </div>
 
 <script>
-
-let q = 0;
-
 const questions = [
-
-{
-q:"What is my nickname for you?",
-options:["Baby","BB","Babe","Madam"],
-correct:1,
-gift:"🎁 Gift 1 Unlocked: Chocolate"
-},
-
-{
-q:"When you're sad, what comfort food do you crave most?",
-options:["Chocolate","Momos","Pizza","Ice Cream"],
-correct:0,
-gift:"🎁 Gift 2 Unlocked: Flowers"
-},
-
-{
-q:"Where did we first properly meet?",
-options:["Cafe","Party","College","Instagram"],
-correct:3,
-gift:"🎁 Gift 3 Unlocked: Birthday Date"
-},
-
-{
-q:"What day is the birthday of the cutest person I know?",
-options:["10 March","9 March","11 March","Everyday"],
-correct:0,
-gift:"🎁 Gift 4 Unlocked: Surprise Gift"
-}
-
+    {
+        text: "🎉 Where did we first meet or properly talk? ✈️",
+        options: ["Hinge", "Instagram", "Event", "Tinder"],
+        correct: "Hinge",
+        gift: "Flowers 💐"
+    },
+    {
+        text: "😋 What comfort food do you crave the most? 🍲",
+        options: ["Khichdi", "Pasta", "Maggie", "Dosa"],
+        correct: "Khichdi",
+        gift: "Jhumkas ✨"
+    },
+    {
+        text: "🥰 What is my nickname for you? 💞",
+        options: ["BB", "Bebo", "Bacha Baby"],
+        correct: "BB",
+        gift: "A Handwritten Letter 💌"
+    },
+    {
+        text: "🌍 Where was your great-great-grandfather from? ✈️",
+        options: ["UK", "US", "Russia", "Brazil"],
+        correct: "UK",
+        gift: "Bangles 💛"
+    }
 ];
 
-function showQuestion(){
+let index = 0;
+let collectedGifts = [];
 
-if(q >= questions.length){
-
-document.getElementById("game").innerHTML =
-"<h1>Happy Birthday BB 🎂</h1><p>You unlocked all your gifts ❤️</p><p>I hope this made you smile.</p>";
-
-return;
+function startQuiz() {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("game").style.display = "block";
+    showQuestion();
 }
 
-let current = questions[q];
-
-let html = "<h3>"+current.q+"</h3>";
-
-current.options.forEach((opt,i)=>{
-html += `<button onclick="answer(${i})">${opt}</button><br>`;
-});
-
-document.getElementById("question").innerHTML = html;
-
+function planeTransition() {
+    const plane = document.createElement("div");
+    plane.innerHTML = "✈️";
+    plane.classList.add("transition-plane");
+    document.body.appendChild(plane);
+    setTimeout(() => plane.remove(), 1800);
 }
 
-function answer(i){
+function showQuestion() {
+    if (index >= questions.length) {
+        showGiftSummary();
+        return;
+    }
 
-let current = questions[q];
+    planeTransition();
 
-if(i === current.correct){
-alert(current.gift);
-}else{
-alert("Hmm not quite 😛 but gift still unlocked");
+    const q = questions[index];
+
+    document.getElementById("game").innerHTML = `
+        <div class="question-box">
+            <h2>${q.text}</h2>
+            ${q.options.map(o => `<button onclick="checkAnswer('${o}')">${o}</button>`).join("")}
+        </div>
+    `;
 }
 
-q++;
-showQuestion();
+function checkAnswer(selected) {
+    const q = questions[index];
 
+    if (selected === q.correct) {
+        collectedGifts.push(q.gift);
+
+        document.getElementById("game").innerHTML = `
+            <div class="question-box">
+                <h2>Correct! 🎉</h2>
+                <div class="gift">You won: <b>${q.gift}</b></div>
+                <button onclick="next()">Next Question ➜</button>
+            </div>
+        `;
+        confetti();
+    } else {
+        document.getElementById("game").innerHTML = `
+            <div class="question-box">
+                <h2>Oops, not that one 😛</h2>
+                <button onclick="showQuestion()">Try Again 🔁</button>
+            </div>
+        `;
+    }
 }
 
-showQuestion();
+function next() {
+    index++;
+    showQuestion();
+}
 
+function showGiftSummary() {
+    planeTransition();
+
+    document.getElementById("game").innerHTML = `
+        <h1 style="color:white;">Yayyy! 🎉</h1>
+        <div class="gift-list">
+            You got <b>4</b> birthday gifts! 🎁💖<br><br>
+            ${collectedGifts.map(g => "• " + g).join("<br>")}
+        </div>
+        <button onclick="showFinalMessage()">Continue ➜</button>
+    `;
+}
+
+function showFinalMessage() {
+    planeTransition();
+    document.getElementById("game").innerHTML = `
+        <div class="final-message">
+✨🎂 Happy Birthday Michelle 🎂✨
+
+I know things were a little rough recently…  
+but you’re still someone very special to me 💖
+
+I hope this little birthday quiz  
+made you smile today ✨
+
+Wishing you a very Happy Birthday BB 🎂💞
+        </div>
+    `;
+    confetti();
+}
+
+function confetti() {
+    const count = 40;
+    for (let i = 0; i < count; i++) {
+        const div = document.createElement("div");
+        div.style.position = "fixed";
+        div.style.width = "8px";
+        div.style.height = "8px";
+        div.style.background = `hsl(${Math.random() * 360}, 100%, 65%)`;
+        div.style.top = (-20) + "px";
+        div.style.left = Math.random() * window.innerWidth + "px";
+        div.style.borderRadius = "50%";
+        div.style.opacity = "0.9";
+        div.style.zIndex = 9999;
+        div.style.transition = "transform 1.2s ease-out, opacity 1.2s";
+
+        document.body.appendChild(div);
+
+        setTimeout(() => {
+            div.style.transform = "translateY(" + (window.innerHeight + 100) + "px)";
+            div.style.opacity = "0";
+        }, 10);
+
+        setTimeout(() => div.remove(), 1500);
+    }
+}
 </script>
 
 </body>
